@@ -1,0 +1,8 @@
+{
+    "components": [
+        {
+            "name": "MapHolder",
+            "description": "Holds the main map component"
+        }
+    ]
+}
