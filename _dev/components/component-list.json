@@ -3,6 +3,10 @@
         {
             "name": "MapHolder",
             "description": "Holds the main map component"
+        },
+        {
+            "name": "SideBar",
+            "description": "Holds further information about the map"
         }
     ]
 }

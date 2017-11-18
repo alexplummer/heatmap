@@ -13,10 +13,11 @@ import VectorLayer from 'ol/layer/vector';
 import Vector from 'ol/source/vector';
 import MultiPoint from 'ol/geom/multipoint';
 import OSM from 'ol/source/osm';
+import Proj from 'ol/proj';
 
 class openlayersmap {
 
-    constructor() {
+    constructor(cb) {
 
         this.map = new Map({
             target: 'map',
@@ -30,6 +31,7 @@ class openlayersmap {
                 zoom: 17
             })
         });
+        this.cb = cb;
     }
 
     createHeatmap() {
@@ -40,10 +42,11 @@ class openlayersmap {
         map.on('click', (e) => {
             coord.push(e.coordinate);
             updateHeatMap();
+            this.queryLocation(e.coordinate);
         });
 
         function updateHeatMap() {
-            
+
             // Remove old heatmap features
             let vectorLayerArray = [];
             map.getLayers().getArray().some(function (layer, i, array) {
@@ -70,6 +73,30 @@ class openlayersmap {
 
             map.addLayer(heatMapLayer);
         }
+    }
+
+    queryLocation(coordinates) {
+        const AMENITY = 'bar|pub|restaurant';
+        const RADIUS = 14;
+        const CONVERTED = Proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+        const LON = CONVERTED[0];
+        const LAT = CONVERTED[1];
+
+        const URL = 'https://www.overpass-api.de/api/interpreter?data=[out:json];(node(around:' + RADIUS + ',' + LAT + ',' + LON + ')' +
+            '["amenity"~"' + AMENITY + '"]);out%20meta;';
+
+        fetch(URL)
+            .then((response) => {
+                response.json().then((data) => {
+                    
+                    if (data.elements[0]) {
+                        this.cb(data.elements[0].tags.name);
+                    }
+                })
+            })
+            .catch((error) => {
+                console.log(error);
+            });
     }
 }
 

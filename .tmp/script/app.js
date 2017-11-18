@@ -805,211 +805,6 @@ function checkDCE() {
 }
 });
 
-var asyncGenerator = function () {
-  function AwaitValue(value) {
-    this.value = value;
-  }
-
-  function AsyncGenerator(gen) {
-    var front, back;
-
-    function send(key, arg) {
-      return new Promise(function (resolve, reject) {
-        var request = {
-          key: key,
-          arg: arg,
-          resolve: resolve,
-          reject: reject,
-          next: null
-        };
-
-        if (back) {
-          back = back.next = request;
-        } else {
-          front = back = request;
-          resume(key, arg);
-        }
-      });
-    }
-
-    function resume(key, arg) {
-      try {
-        var result = gen[key](arg);
-        var value = result.value;
-
-        if (value instanceof AwaitValue) {
-          Promise.resolve(value.value).then(function (arg) {
-            resume("next", arg);
-          }, function (arg) {
-            resume("throw", arg);
-          });
-        } else {
-          settle(result.done ? "return" : "normal", result.value);
-        }
-      } catch (err) {
-        settle("throw", err);
-      }
-    }
-
-    function settle(type, value) {
-      switch (type) {
-        case "return":
-          front.resolve({
-            value: value,
-            done: true
-          });
-          break;
-
-        case "throw":
-          front.reject(value);
-          break;
-
-        default:
-          front.resolve({
-            value: value,
-            done: false
-          });
-          break;
-      }
-
-      front = front.next;
-
-      if (front) {
-        resume(front.key, front.arg);
-      } else {
-        back = null;
-      }
-    }
-
-    this._invoke = send;
-
-    if (typeof gen.return !== "function") {
-      this.return = undefined;
-    }
-  }
-
-  if (typeof Symbol === "function" && Symbol.asyncIterator) {
-    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
-      return this;
-    };
-  }
-
-  AsyncGenerator.prototype.next = function (arg) {
-    return this._invoke("next", arg);
-  };
-
-  AsyncGenerator.prototype.throw = function (arg) {
-    return this._invoke("throw", arg);
-  };
-
-  AsyncGenerator.prototype.return = function (arg) {
-    return this._invoke("return", arg);
-  };
-
-  return {
-    wrap: function (fn) {
-      return function () {
-        return new AsyncGenerator(fn.apply(this, arguments));
-      };
-    },
-    await: function (value) {
-      return new AwaitValue(value);
-    }
-  };
-}();
-
-
-
-
-
-var classCallCheck = function (instance, Constructor) {
-  if (!(instance instanceof Constructor)) {
-    throw new TypeError("Cannot call a class as a function");
-  }
-};
-
-var createClass = function () {
-  function defineProperties(target, props) {
-    for (var i = 0; i < props.length; i++) {
-      var descriptor = props[i];
-      descriptor.enumerable = descriptor.enumerable || false;
-      descriptor.configurable = true;
-      if ("value" in descriptor) descriptor.writable = true;
-      Object.defineProperty(target, descriptor.key, descriptor);
-    }
-  }
-
-  return function (Constructor, protoProps, staticProps) {
-    if (protoProps) defineProperties(Constructor.prototype, protoProps);
-    if (staticProps) defineProperties(Constructor, staticProps);
-    return Constructor;
-  };
-}();
-
-
-
-
-
-
-
-
-
-var inherits = function (subClass, superClass) {
-  if (typeof superClass !== "function" && superClass !== null) {
-    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
-  }
-
-  subClass.prototype = Object.create(superClass && superClass.prototype, {
-    constructor: {
-      value: subClass,
-      enumerable: false,
-      writable: true,
-      configurable: true
-    }
-  });
-  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
-};
-
-
-
-
-
-
-
-
-
-
-
-var possibleConstructorReturn = function (self, call) {
-  if (!self) {
-    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
-  }
-
-  return call && (typeof call === "object" || typeof call === "function") ? call : self;
-};
-
-// MapHolder
-// ============
-// Holds the main map component
-
-// Imports
-var MapHolder = function (_React$Component) {
-    inherits(MapHolder, _React$Component);
-
-    function MapHolder(props) {
-        classCallCheck(this, MapHolder);
-        return possibleConstructorReturn(this, (MapHolder.__proto__ || Object.getPrototypeOf(MapHolder)).call(this, props));
-    }
-
-    createClass(MapHolder, [{
-        key: "render",
-        value: function render() {
-            return react.createElement("div", { id: "map" });
-        }
-    }]);
-    return MapHolder;
-}(react.Component);
-
 var _ol_ = {};
 
 
@@ -45242,13 +45037,196 @@ _ol_source_OSM_.ATTRIBUTION = '&copy; ' +
       '<a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> ' +
       'contributors.';
 
+var asyncGenerator = function () {
+  function AwaitValue(value) {
+    this.value = value;
+  }
+
+  function AsyncGenerator(gen) {
+    var front, back;
+
+    function send(key, arg) {
+      return new Promise(function (resolve, reject) {
+        var request = {
+          key: key,
+          arg: arg,
+          resolve: resolve,
+          reject: reject,
+          next: null
+        };
+
+        if (back) {
+          back = back.next = request;
+        } else {
+          front = back = request;
+          resume(key, arg);
+        }
+      });
+    }
+
+    function resume(key, arg) {
+      try {
+        var result = gen[key](arg);
+        var value = result.value;
+
+        if (value instanceof AwaitValue) {
+          Promise.resolve(value.value).then(function (arg) {
+            resume("next", arg);
+          }, function (arg) {
+            resume("throw", arg);
+          });
+        } else {
+          settle(result.done ? "return" : "normal", result.value);
+        }
+      } catch (err) {
+        settle("throw", err);
+      }
+    }
+
+    function settle(type, value) {
+      switch (type) {
+        case "return":
+          front.resolve({
+            value: value,
+            done: true
+          });
+          break;
+
+        case "throw":
+          front.reject(value);
+          break;
+
+        default:
+          front.resolve({
+            value: value,
+            done: false
+          });
+          break;
+      }
+
+      front = front.next;
+
+      if (front) {
+        resume(front.key, front.arg);
+      } else {
+        back = null;
+      }
+    }
+
+    this._invoke = send;
+
+    if (typeof gen.return !== "function") {
+      this.return = undefined;
+    }
+  }
+
+  if (typeof Symbol === "function" && Symbol.asyncIterator) {
+    AsyncGenerator.prototype[Symbol.asyncIterator] = function () {
+      return this;
+    };
+  }
+
+  AsyncGenerator.prototype.next = function (arg) {
+    return this._invoke("next", arg);
+  };
+
+  AsyncGenerator.prototype.throw = function (arg) {
+    return this._invoke("throw", arg);
+  };
+
+  AsyncGenerator.prototype.return = function (arg) {
+    return this._invoke("return", arg);
+  };
+
+  return {
+    wrap: function (fn) {
+      return function () {
+        return new AsyncGenerator(fn.apply(this, arguments));
+      };
+    },
+    await: function (value) {
+      return new AwaitValue(value);
+    }
+  };
+}();
+
+
+
+
+
+var classCallCheck = function (instance, Constructor) {
+  if (!(instance instanceof Constructor)) {
+    throw new TypeError("Cannot call a class as a function");
+  }
+};
+
+var createClass = function () {
+  function defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  return function (Constructor, protoProps, staticProps) {
+    if (protoProps) defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) defineProperties(Constructor, staticProps);
+    return Constructor;
+  };
+}();
+
+
+
+
+
+
+
+
+
+var inherits = function (subClass, superClass) {
+  if (typeof superClass !== "function" && superClass !== null) {
+    throw new TypeError("Super expression must either be null or a function, not " + typeof superClass);
+  }
+
+  subClass.prototype = Object.create(superClass && superClass.prototype, {
+    constructor: {
+      value: subClass,
+      enumerable: false,
+      writable: true,
+      configurable: true
+    }
+  });
+  if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass;
+};
+
+
+
+
+
+
+
+
+
+
+
+var possibleConstructorReturn = function (self, call) {
+  if (!self) {
+    throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+  }
+
+  return call && (typeof call === "object" || typeof call === "function") ? call : self;
+};
+
 // App
 // ============
 // All of JS is organised from here
 
 // Imports
 var openlayersmap = function () {
-    function openlayersmap() {
+    function openlayersmap(cb) {
         classCallCheck(this, openlayersmap);
 
 
@@ -45262,11 +45240,14 @@ var openlayersmap = function () {
                 zoom: 17
             })
         });
+        this.cb = cb;
     }
 
     createClass(openlayersmap, [{
         key: 'createHeatmap',
         value: function createHeatmap() {
+            var _this = this;
+
             var coord = [];
             var data = new _ol_source_Vector_$1();
             var map = this.map;
@@ -45274,6 +45255,7 @@ var openlayersmap = function () {
             map.on('click', function (e) {
                 coord.push(e.coordinate);
                 updateHeatMap();
+                _this.queryLocation(e.coordinate);
             });
 
             function updateHeatMap() {
@@ -45304,9 +45286,121 @@ var openlayersmap = function () {
                 map.addLayer(heatMapLayer);
             }
         }
+    }, {
+        key: 'queryLocation',
+        value: function queryLocation(coordinates) {
+            var _this2 = this;
+
+            var AMENITY = 'bar|pub|restaurant';
+            var RADIUS = 14;
+            var CONVERTED = _ol_proj_.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
+            var LON = CONVERTED[0];
+            var LAT = CONVERTED[1];
+
+            var URL = 'https://www.overpass-api.de/api/interpreter?data=[out:json];(node(around:' + RADIUS + ',' + LAT + ',' + LON + ')' + '["amenity"~"' + AMENITY + '"]);out%20meta;';
+
+            fetch(URL).then(function (response) {
+                response.json().then(function (data) {
+
+                    if (data.elements[0]) {
+                        _this2.cb(data.elements[0].tags.name);
+                    }
+                });
+            }).catch(function (error) {
+                console.log(error);
+            });
+        }
     }]);
     return openlayersmap;
 }();
+
+// SideBar
+// ============
+// Holds further information about the map
+
+// Imports
+var SideBar = function (_React$Component) {
+    inherits(SideBar, _React$Component);
+
+    function SideBar(props) {
+        classCallCheck(this, SideBar);
+        return possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+    }
+
+    createClass(SideBar, [{
+        key: "render",
+        value: function render() {
+
+            var locationsList = this.props.locations.map(function (thisLocation) {
+                return react.createElement(
+                    "li",
+                    { key: "thisLocation" },
+                    thisLocation
+                );
+            });
+            return react.createElement(
+                "div",
+                { className: "SideBar" },
+                react.createElement(
+                    "ul",
+                    null,
+                    locationsList
+                )
+            );
+        }
+    }]);
+    return SideBar;
+}(react.Component);
+
+// MapHolder
+// ============
+// Holds the main map component
+
+// Imports
+var MapHolder = function (_React$Component) {
+    inherits(MapHolder, _React$Component);
+
+    function MapHolder(props) {
+        classCallCheck(this, MapHolder);
+
+        var _this = possibleConstructorReturn(this, (MapHolder.__proto__ || Object.getPrototypeOf(MapHolder)).call(this, props));
+
+        _this.state = {
+            locations: []
+        };
+        return _this;
+    }
+
+    createClass(MapHolder, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            var allLocations = [];
+
+            // Add new map
+            var map = new openlayersmap(function (updatedLocations) {
+
+                allLocations.push(updatedLocations);
+
+                _this2.setState({
+                    locations: allLocations
+                });
+            });
+            map.createHeatmap();
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return react.createElement(
+                'div',
+                { id: 'map' },
+                react.createElement(SideBar, { locations: this.state.locations })
+            );
+        }
+    }]);
+    return MapHolder;
+}(react.Component);
 
 // App
 // ============
@@ -45314,10 +45408,6 @@ var openlayersmap = function () {
 
 // Imports
 reactDom.render(react.createElement(MapHolder, null), document.querySelector('#app'));
-
-// Add new map
-var map = new openlayersmap();
-map.createHeatmap();
 
 }());
 //# sourceMappingURL=app.js.map

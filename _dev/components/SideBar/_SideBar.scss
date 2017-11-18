@@ -1,0 +1,14 @@
+
+// SideBar
+// ============
+// Holds further information about the map
+
+.SideBar {
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 36vw;
+    height: 100vh;
+    background: #fff;
+    z-index: $z-m;
+}
