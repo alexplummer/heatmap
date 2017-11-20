@@ -11,6 +11,24 @@
       "css": "star-filled",
       "code": 59392,
       "src": "typicons"
+    },
+    {
+      "uid": "c2e02247804b8372740de0b76311f1ad",
+      "css": "beer",
+      "code": 59394,
+      "src": "typicons"
+    },
+    {
+      "uid": "935dd4069330896913745bbdd9699b0e",
+      "css": "wine",
+      "code": 59395,
+      "src": "typicons"
+    },
+    {
+      "uid": "b08f8c33777cd6b512d9576fc6e7f405",
+      "css": "food",
+      "code": 59396,
+      "src": "linecons"
     }
   ]
 }

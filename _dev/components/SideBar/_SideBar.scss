@@ -8,9 +8,10 @@
     top: 0;
     right: 0;
     width: 30vw;
-    height: 100vh;
+    height: calc(100vh - #{$size-m} * 2);
+    margin: $size-m;
     padding: $size-m;
     background: $clr-primary;
     z-index: $z-m;
-    transform: translateX(100%);
+    transform: translateX(calc(100vh - #{$size-m} * 2));
 }

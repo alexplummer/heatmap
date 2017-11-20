@@ -1,2 +1,5 @@
 
 .icon-star-filled:before { content: '\e800'; } /* '' */
+.icon-beer:before { content: '\e802'; } /* '' */
+.icon-wine:before { content: '\e803'; } /* '' */
+.icon-food:before { content: '\e804'; } /* '' */

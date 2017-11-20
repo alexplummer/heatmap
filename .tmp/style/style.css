@@ -1748,22 +1748,42 @@ Copyright (c) 2015 Daniel Eden
 body {
   -webkit-backface-visibility: hidden; }
 
-.animated {
+.animated, .MainHeader, .VisitTable table.loaded tr:nth-child(2) td:first-child:before {
   -webkit-animation-duration: 1s;
   animation-duration: 1s;
   -webkit-animation-fill-mode: both;
   animation-fill-mode: both; }
-  .animated.infinite {
+  .animated.infinite, .infinite.MainHeader, .VisitTable table.loaded tr:nth-child(2) td.infinite:first-child:before {
     animation-iteration-count: infinite; }
-  .animated.hinge {
+  .animated.hinge, .hinge.MainHeader, .VisitTable table.loaded tr:nth-child(2) td.hinge:first-child:before {
     -webkit-animation-duration: 2s;
     animation-duration: 2s; }
-  .animated.bounceIn, .animated.bounceOut {
+  .animated.bounceIn, .bounceIn.MainHeader, .VisitTable table.loaded tr:nth-child(2) td.bounceIn:first-child:before, .animated.bounceOut, .bounceOut.MainHeader, .VisitTable table.loaded tr:nth-child(2) td.bounceOut:first-child:before {
     -webkit-animation-duration: 0.75s;
     animation-duration: 0.75s; }
-  .animated.flipOutX, .animated.flipOutY {
+  .animated.flipOutX, .flipOutX.MainHeader, .VisitTable table.loaded tr:nth-child(2) td.flipOutX:first-child:before, .animated.flipOutY, .flipOutY.MainHeader, .VisitTable table.loaded tr:nth-child(2) td.flipOutY:first-child:before {
     -webkit-animation-duration: 0.75s;
     animation-duration: 0.75s; }
+
+@-webkit-keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    -webkit-transform: translateY(0); }
+  40% {
+    -webkit-transform: translateY(-30px); }
+  60% {
+    -webkit-transform: translateY(-15px); } }
+
+@keyframes bounce {
+  0%, 20%, 50%, 80%, 100% {
+    transform: translateY(0); }
+  40% {
+    transform: translateY(-30px); }
+  60% {
+    transform: translateY(-15px); } }
+
+.bounce, .VisitTable table.loaded tr:nth-child(2) td:first-child:before {
+  -webkit-animation-name: bounce;
+  animation-name: bounce; }
 
 @-webkit-keyframes swing {
   20%, 40%, 60%, 80%, 100% {
@@ -1797,6 +1817,34 @@ body {
   -webkit-animation-name: swing;
   animation-name: swing; }
 
+@-webkit-keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateY(-2000px); }
+  60% {
+    opacity: 1;
+    -webkit-transform: translateY(30px); }
+  80% {
+    -webkit-transform: translateY(-10px); }
+  100% {
+    -webkit-transform: translateY(0); } }
+
+@keyframes bounceInDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-2000px); }
+  60% {
+    opacity: 1;
+    transform: translateY(30px); }
+  80% {
+    transform: translateY(-10px); }
+  100% {
+    transform: translateY(0); } }
+
+.bounceInDown {
+  -webkit-animation-name: bounceInDown;
+  animation-name: bounceInDown; }
+
 @-webkit-keyframes bounceInRight {
   0% {
     opacity: 0;
@@ -1825,10 +1873,34 @@ body {
   -webkit-animation-name: bounceInRight;
   animation-name: bounceInRight; }
 
+@-webkit-keyframes bounceOutLeft {
+  0% {
+    -webkit-transform: translateX(0); }
+  20% {
+    opacity: 1;
+    -webkit-transform: translateX(20px); }
+  100% {
+    opacity: 0;
+    -webkit-transform: translateX(-2000px); } }
+
+@keyframes bounceOutLeft {
+  0% {
+    transform: translateX(0); }
+  20% {
+    opacity: 1;
+    transform: translateX(20px); }
+  100% {
+    opacity: 0;
+    transform: translateX(-2000px); } }
+
+.bounceOutLeft {
+  -webkit-animation-name: bounceOutLeft;
+  animation-name: bounceOutLeft; }
+
 @font-face {
   font-family: 'fontello';
-  src: url("../font/fontello.eot?4316559");
-  src: url("../font/fontello.eot?4316559#iefix") format("embedded-opentype"), url("../font/fontello.woff2?4316559") format("woff2"), url("../font/fontello.woff?4316559") format("woff"), url("../font/fontello.ttf?4316559") format("truetype"), url("../font/fontello.svg?4316559#fontello") format("svg");
+  src: url("../font/fontello.eot?3967503");
+  src: url("../font/fontello.eot?3967503#iefix") format("embedded-opentype"), url("../font/fontello.woff2?3967503") format("woff2"), url("../font/fontello.woff?3967503") format("woff"), url("../font/fontello.ttf?3967503") format("truetype"), url("../font/fontello.svg?3967503#fontello") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -1838,7 +1910,7 @@ body {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?4316559#fontello') format('svg');
+    src: url('../font/fontello.svg?3967503#fontello') format('svg');
   }
 }
 */
@@ -1873,6 +1945,18 @@ body {
   content: '\e800'; }
 
 /* '' */
+.icon-beer:before {
+  content: '\e802'; }
+
+/* '' */
+.icon-wine:before {
+  content: '\e803'; }
+
+/* '' */
+.icon-food:before {
+  content: '\e804'; }
+
+/* '' */
 body, html {
   background: #fff;
   overflow-x: hidden; }
@@ -1884,15 +1968,51 @@ body, html {
 
 /* inject:componentImports */
 .MainHeader {
+  position: relative;
+  box-shadow: 0 3px 15px 0px rgba(0, 0, 0, 0.2);
   position: absolute;
   z-index: 50;
-  background: rgba(6, 34, 119, 0.8);
-  border-bottom-right-radius: 20px; }
+  background: rgba(255, 255, 255, 0.93);
+  width: 30vw;
+  margin: 1.6875rem;
+  padding: 1.6875rem; }
   .MainHeader h1 {
-    padding: 0;
-    margin: 1.6875rem;
-    font-weight: 300;
-    color: #fff; }
+    background: #062277;
+    text-transform: uppercase;
+    padding: 1.6875rem;
+    margin: -1.6875rem;
+    font-weight: 100;
+    letter-spacing: 2px;
+    font-size: 1.125rem;
+    line-height: 1.125rem;
+    color: #fff;
+    text-align: center; }
+  .MainHeader p {
+    margin-top: 2.53125rem;
+    margin-bottom: 0;
+    font-size: 1.5rem;
+    color: #E1523F;
+    text-align: center; }
+  .MainHeader ul {
+    margin: 1.6875rem 0 0.84375rem 0;
+    list-style: none;
+    border: 1px solid #555;
+    display: inline-block;
+    padding: 0.84375rem;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%); }
+  .MainHeader li {
+    color: #555;
+    font-size: 1.125rem;
+    margin-bottom: 0.84375rem;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.84375rem; }
+    .MainHeader li:before {
+      margin-right: 0.84375rem; }
+    .MainHeader li:last-of-type {
+      border: 0;
+      margin-bottom: 0; }
 
 .MapHolder {
   height: 100vh; }
@@ -1904,19 +2024,19 @@ body, html {
   top: 0;
   right: 0;
   width: 30vw;
-  height: 100vh;
+  height: calc(100vh - 1.6875rem * 2);
+  margin: 1.6875rem;
   padding: 1.6875rem;
   background: #062277;
   z-index: 50;
-  transform: translateX(100%); }
-
-.Stats text {
-  fill: #fff; }
+  transform: translateX(calc(100vh - 1.6875rem * 2)); }
 
 .VisitTable table {
   width: 100%; }
   .VisitTable table:first-of-type tr:first-of-type {
     background: rgba(250, 250, 250, 0.2); }
+  .VisitTable table:first-of-type td {
+    color: #ffe600; }
   .VisitTable table:first-of-type tr:nth-child(2) td:first-child {
     position: relative; }
     .VisitTable table:first-of-type tr:nth-child(2) td:first-child:before {
@@ -1930,18 +2050,24 @@ body, html {
   .VisitTable table th:first-of-type, .VisitTable table td:first-of-type {
     text-align: left;
     width: 65%; }
-  .VisitTable table:nth-child(2) th, .VisitTable table:nth-child(2) td {
-    font-size: 1.125rem; }
+  .VisitTable table:nth-of-type(2) th, .VisitTable table:nth-of-type(2) td {
+    font-size: 0.75rem; }
 
 .VisitTable h3, .VisitTable h4, .VisitTable th, .VisitTable td {
   color: #fff; }
 
 .VisitTable h3, .VisitTable h4 {
   font-weight: 300;
-  margin-bottom: -0.84375rem; }
+  margin-bottom: -0.84375rem;
+  text-align: center; }
 
 .VisitTable h4 {
   text-transform: uppercase; }
+
+.Stats {
+  animation-delay: .2s; }
+  .Stats text {
+    fill: #fff; }
 
 /* endinjectComponent */
 

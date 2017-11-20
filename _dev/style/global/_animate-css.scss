@@ -28,7 +28,7 @@ $use-fadeOutRightBig	: false;
 // Bounce Enter
 $use-bounceIn			: false;
 $use-bounceInUp			: false;
-$use-bounceInDown 		: false;
+$use-bounceInDown 		: true;
 $use-bounceInLeft 		: false;
 $use-bounceInRight 		: true;
 
@@ -36,7 +36,7 @@ $use-bounceInRight 		: true;
 $use-bounceOut			: false;
 $use-bounceOutUp		: false;
 $use-bounceOutDown 		: false;
-$use-bounceOutLeft 		: false;
+$use-bounceOutLeft 		: true;
 $use-bounceOutRight 	: false;
 
 // Rotate Enter
@@ -78,7 +78,7 @@ $use-lightSpeedIn 		: false;
 $use-lightSpeedOut 		: false;
 
 // Attention Seekers
-$use-bounce				: false;
+$use-bounce				: true;
 $use-flash				: false;
 $use-pulse				: false;
 $use-wiggle				: false;

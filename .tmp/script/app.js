@@ -45238,8 +45238,10 @@ var openlayersmap = function () {
             view: new _ol_View_({
                 center: [-36500, 6673712],
                 zoom: 18
-            })
+            }),
+            interactions: _ol_interaction_.defaults({ doubleClickZoom: false })
         });
+
         this.cb = cb;
     }
 
@@ -45256,6 +45258,7 @@ var openlayersmap = function () {
                 coord.push(e.coordinate);
                 updateHeatMap();
                 _this.queryLocation(e.coordinate);
+                document.querySelector('.MainHeader').classList.add('bounceOutLeft');
             });
 
             function updateHeatMap() {
@@ -45278,8 +45281,8 @@ var openlayersmap = function () {
 
                 var heatMapLayer = new _ol_layer_Heatmap_$1({
                     source: data,
-                    radius: 10,
-                    blur: 20
+                    radius: 15,
+                    blur: 60
                 });
 
                 map.addLayer(heatMapLayer);
@@ -45321,25 +45324,82 @@ var openlayersmap = function () {
 var Stats = function (_React$Component) {
     inherits(Stats, _React$Component);
 
-    function Stats() {
+    function Stats(props) {
         classCallCheck(this, Stats);
-        return possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).apply(this, arguments));
+
+        var _this = possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).call(this, props));
+
+        _this.state = {
+            active: false
+        };
+        return _this;
     }
 
     createClass(Stats, [{
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate(nextProps) {
+
+            if (nextProps.locations !== this.props.locations) {
+
+                if (this.props.locations.length > 0) {
+
+                    this.setState({
+                        active: true
+                    });
+                }
+            }
+        }
+    }, {
         key: 'render',
         value: function render() {
-            if (this.props.locations) {
+            if (this.props.locations.length > 1) {
+                var addColumn = function addColumn(data, delay) {
+                    var dataTmp = [data[0], 0];
+
+                    setTimeout(function () {
+                        chart.internal.d3.transition().duration(100);
+                        chart.load({
+                            columns: [dataTmp]
+                        });
+                    }, timeout);
+
+                    timeout += 100;
+
+                    data.forEach(function (value, index) {
+                        setTimeout(function () {
+                            dataTmp[index] = value;
+                            if (index < 10) dataTmp.push(0);
+                            chart.load({
+                                columns: [dataTmp],
+                                length: 0
+                            });
+                        }, timeout + delay / data.length * index);
+                    });
+                    timeout += delay;
+                };
+
                 var chart = c3.generate({
                     bindto: '.Stats',
                     data: {
-                        columns: this.props.locations,
+                        columns: [],
                         type: 'pie'
+                    },
+                    size: {
+                        height: 240
+                    },
+                    transition: {
+                        duration: 200
                     }
+                });
+
+                var timeout = 100;
+
+                this.props.locations.forEach(function (thisLocation) {
+                    addColumn([thisLocation[0], thisLocation[1]], 1000);
                 });
             }
 
-            return react.createElement('div', { className: 'Stats' });
+            return react.createElement('div', { className: this.state.active ? "Stats animated bounceInDown" : "Stats" });
         }
     }]);
     return Stats;
@@ -45358,12 +45418,42 @@ var VisitTable = function (_React$Component) {
 
         var _this = possibleConstructorReturn(this, (VisitTable.__proto__ || Object.getPrototypeOf(VisitTable)).call(this, props));
 
+        _this.state = {
+            loaded: false
+        };
+
         _this.locationsList = [];
         _this.winningLocation = [];
+        _this.leaderboardHeader = "";
         return _this;
     }
 
     createClass(VisitTable, [{
+        key: "componentWillUpdate",
+        value: function componentWillUpdate(nextProps) {
+
+            if (nextProps.locations !== this.props.locations) {
+
+                this.setState({
+                    loaded: false
+                });
+            }
+        }
+    }, {
+        key: "componentDidUpdate",
+        value: function componentDidUpdate(prevProps) {
+            var _this2 = this;
+
+            if (prevProps.locations !== this.props.locations) {
+
+                setTimeout(function () {
+                    _this2.setState({
+                        loaded: true
+                    });
+                }, 500);
+            }
+        }
+    }, {
         key: "render",
         value: function render() {
 
@@ -45385,22 +45475,30 @@ var VisitTable = function (_React$Component) {
                 );
             });
 
-            this.locationsList = this.props.locations.map(function (thislocation) {
-                return react.createElement(
-                    "tr",
-                    { key: thislocation },
-                    react.createElement(
-                        "td",
-                        null,
-                        thislocation[0]
-                    ),
-                    react.createElement(
-                        "td",
-                        null,
-                        thislocation[1]
-                    )
+            if (this.props.locations.length > 0) {
+                this.leaderboardHeader = react.createElement(
+                    "h4",
+                    null,
+                    "Leaderboard"
                 );
-            });
+
+                this.locationsList = this.props.locations.map(function (thislocation) {
+                    return react.createElement(
+                        "tr",
+                        { key: thislocation },
+                        react.createElement(
+                            "td",
+                            null,
+                            thislocation[0]
+                        ),
+                        react.createElement(
+                            "td",
+                            null,
+                            thislocation[1]
+                        )
+                    );
+                });
+            }
 
             return react.createElement(
                 "div",
@@ -45412,7 +45510,7 @@ var VisitTable = function (_React$Component) {
                 ),
                 react.createElement(
                     "table",
-                    null,
+                    { className: this.state.loaded ? 'loaded' : '' },
                     react.createElement(
                         "tr",
                         null,
@@ -45429,11 +45527,7 @@ var VisitTable = function (_React$Component) {
                     ),
                     this.winningLocation
                 ),
-                react.createElement(
-                    "h4",
-                    null,
-                    "Leaderboard"
-                ),
+                this.leaderboardHeader,
                 react.createElement(
                     "table",
                     null,

@@ -4,15 +4,57 @@
 // Heading for the document
 
 .MainHeader {
+    @include shadow(large);
+    @extend .animated;
     position: absolute;
     z-index: $z-m;
-    background: fade-out($clr-primary, .2);
-    border-bottom-right-radius: 20px;
+    background: fade-out(#fff, .07);
+    width: 30vw;
+    margin: $size-m;
+    padding: $size-m;
 
     h1 {
-        padding: 0;
-        margin: $size-m;
-        font-weight: 300;
+        background: fade-out($clr-primary, .0);
+        text-transform: uppercase;
+        padding: $size-m;
+        margin:  -$size-m;
+        font-weight: 100;
+        letter-spacing: 2px;
+        font-size: $font-m;
+        line-height: $font-m;
         color: #fff;
+        text-align: center;
+    }
+    p {
+        margin-top: $size-m * 1.5;
+        margin-bottom: 0;
+        font-size: $font-l;
+        color: #E1523F;
+        text-align: center;
+    }
+    ul {
+        margin: $size-m 0 $size-s 0;
+        list-style: none;
+        border: 1px solid #555;
+        display: inline-block;
+        padding: $size-s;
+        position: relative;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+    li {
+        color: #555;
+        font-size: $font-m;
+        margin-bottom: $size-s;
+        border-bottom: 1px solid #ccc;
+        padding-bottom: $size-s;
+
+        &:before {
+            margin-right: $size-s;
+        }
+        &:last-of-type {
+            border: 0;
+            margin-bottom: 0;
+        }
     }
 }

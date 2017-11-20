@@ -7,6 +7,7 @@
 import Map from 'ol/map';
 import View from 'ol/view';
 import TileLayer from 'ol/layer/tile';
+import Interaction from 'ol/interaction';
 import Feature from 'ol/feature';
 import Heatmap from 'ol/layer/heatmap';
 import VectorLayer from 'ol/layer/vector';
@@ -29,8 +30,10 @@ class openlayersmap {
             view: new View({
                 center: [-36500, 6673712],
                 zoom: 18
-            })
+            }),
+            interactions: Interaction.defaults({ doubleClickZoom: false })
         });
+
         this.cb = cb;
     }
 
@@ -43,6 +46,7 @@ class openlayersmap {
             coord.push(e.coordinate);
             updateHeatMap();
             this.queryLocation(e.coordinate);
+            document.querySelector('.MainHeader').classList.add('bounceOutLeft');
         });
 
         function updateHeatMap() {
@@ -66,8 +70,8 @@ class openlayersmap {
 
             let heatMapLayer = new Heatmap({
                 source: data,
-                radius: 10,
-                blur: 20
+                radius: 15,
+                blur: 60
             });
 
             map.addLayer(heatMapLayer);
@@ -87,7 +91,7 @@ class openlayersmap {
         fetch(URL)
             .then((response) => {
                 response.json().then((data) => {
-                    
+
                     if (data.elements[0]) {
                         this.cb(data.elements[0].tags.name);
                     }
