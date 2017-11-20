@@ -64,6 +64,9 @@
 // User components, these are auto injected by Gulp when saved to folder
 
 /* inject:componentImports */
+@import "../components/MainHeader/_MainHeader.scss";
 @import "../components/MapHolder/_MapHolder.scss";
 @import "../components/SideBar/_SideBar.scss";
+@import "../components/Stats/_Stats.scss";
+@import "../components/VisitTable/_VisitTable.scss";
 /* endinjectComponent */

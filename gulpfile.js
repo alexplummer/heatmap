@@ -723,7 +723,7 @@ gulp.task('watch', () => {
 		]));
 	});
 	// FONTELLO
-	plugins.watch(paths.dev + '/font/config.json', () => {
+	plugins.watch(paths.dev + '/font/fontello/config.json', () => {
 		gulp.start(gulpsync.sync([
 			'watch:messageFONTELLO', ['fontello', 'clean-reports', 'build-sass'], ['lint-reports', 'copy:fonts']
 		]));

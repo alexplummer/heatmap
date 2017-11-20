@@ -27,8 +27,8 @@ class openlayersmap {
                 })
             ],
             view: new View({
-                center: [-36676.93019369146, 6673712.155139712],
-                zoom: 17
+                center: [-36500, 6673712],
+                zoom: 18
             })
         });
         this.cb = cb;
@@ -66,9 +66,8 @@ class openlayersmap {
 
             let heatMapLayer = new Heatmap({
                 source: data,
-                radius: 5,
-                blur: 15,
-                shadow: 400
+                radius: 10,
+                blur: 20
             });
 
             map.addLayer(heatMapLayer);
@@ -77,7 +76,7 @@ class openlayersmap {
 
     queryLocation(coordinates) {
         const AMENITY = 'bar|pub|restaurant';
-        const RADIUS = 14;
+        const RADIUS = 12;
         const CONVERTED = Proj.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
         const LON = CONVERTED[0];
         const LAT = CONVERTED[1];

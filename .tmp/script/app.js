@@ -45236,8 +45236,8 @@ var openlayersmap = function () {
                 source: new _ol_source_OSM_()
             })],
             view: new _ol_View_({
-                center: [-36676.93019369146, 6673712.155139712],
-                zoom: 17
+                center: [-36500, 6673712],
+                zoom: 18
             })
         });
         this.cb = cb;
@@ -45278,9 +45278,8 @@ var openlayersmap = function () {
 
                 var heatMapLayer = new _ol_layer_Heatmap_$1({
                     source: data,
-                    radius: 5,
-                    blur: 15,
-                    shadow: 400
+                    radius: 10,
+                    blur: 20
                 });
 
                 map.addLayer(heatMapLayer);
@@ -45292,7 +45291,7 @@ var openlayersmap = function () {
             var _this2 = this;
 
             var AMENITY = 'bar|pub|restaurant';
-            var RADIUS = 14;
+            var RADIUS = 12;
             var CONVERTED = _ol_proj_.transform(coordinates, 'EPSG:3857', 'EPSG:4326');
             var LON = CONVERTED[0];
             var LAT = CONVERTED[1];
@@ -45314,6 +45313,138 @@ var openlayersmap = function () {
     return openlayersmap;
 }();
 
+// Stats
+// ============
+// Chart for visitor numbers
+
+// Imports
+var Stats = function (_React$Component) {
+    inherits(Stats, _React$Component);
+
+    function Stats() {
+        classCallCheck(this, Stats);
+        return possibleConstructorReturn(this, (Stats.__proto__ || Object.getPrototypeOf(Stats)).apply(this, arguments));
+    }
+
+    createClass(Stats, [{
+        key: 'render',
+        value: function render() {
+            if (this.props.locations) {
+                var chart = c3.generate({
+                    bindto: '.Stats',
+                    data: {
+                        columns: this.props.locations,
+                        type: 'pie'
+                    }
+                });
+            }
+
+            return react.createElement('div', { className: 'Stats' });
+        }
+    }]);
+    return Stats;
+}(react.Component);
+
+// VisitTable
+// ============
+// A table to track number of visitors
+
+// Imports
+var VisitTable = function (_React$Component) {
+    inherits(VisitTable, _React$Component);
+
+    function VisitTable(props) {
+        classCallCheck(this, VisitTable);
+
+        var _this = possibleConstructorReturn(this, (VisitTable.__proto__ || Object.getPrototypeOf(VisitTable)).call(this, props));
+
+        _this.locationsList = [];
+        _this.winningLocation = [];
+        return _this;
+    }
+
+    createClass(VisitTable, [{
+        key: "render",
+        value: function render() {
+
+            // Render locations to table
+            this.winningLocation = this.props.winner.map(function (thislocation) {
+                return react.createElement(
+                    "tr",
+                    { key: thislocation },
+                    react.createElement(
+                        "td",
+                        null,
+                        thislocation[0]
+                    ),
+                    react.createElement(
+                        "td",
+                        null,
+                        thislocation[1]
+                    )
+                );
+            });
+
+            this.locationsList = this.props.locations.map(function (thislocation) {
+                return react.createElement(
+                    "tr",
+                    { key: thislocation },
+                    react.createElement(
+                        "td",
+                        null,
+                        thislocation[0]
+                    ),
+                    react.createElement(
+                        "td",
+                        null,
+                        thislocation[1]
+                    )
+                );
+            });
+
+            return react.createElement(
+                "div",
+                { className: "VisitTable" },
+                react.createElement(
+                    "h3",
+                    null,
+                    "Current winner"
+                ),
+                react.createElement(
+                    "table",
+                    null,
+                    react.createElement(
+                        "tr",
+                        null,
+                        react.createElement(
+                            "th",
+                            null,
+                            "Name"
+                        ),
+                        react.createElement(
+                            "th",
+                            null,
+                            "Visits"
+                        )
+                    ),
+                    this.winningLocation
+                ),
+                react.createElement(
+                    "h4",
+                    null,
+                    "Leaderboard"
+                ),
+                react.createElement(
+                    "table",
+                    null,
+                    this.locationsList
+                )
+            );
+        }
+    }]);
+    return VisitTable;
+}(react.Component);
+
 // SideBar
 // ============
 // Holds further information about the map
@@ -45324,28 +45455,63 @@ var SideBar = function (_React$Component) {
 
     function SideBar(props) {
         classCallCheck(this, SideBar);
-        return possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+
+        var _this = possibleConstructorReturn(this, (SideBar.__proto__ || Object.getPrototypeOf(SideBar)).call(this, props));
+
+        _this.state = {
+            active: false,
+            locations: []
+        };
+
+        _this.sortedLocations = [];
+        _this.allSortedLocations = [];
+        _this.winningArray = [];
+        return _this;
     }
 
     createClass(SideBar, [{
-        key: "render",
+        key: 'sortLocationVisits',
+        value: function sortLocationVisits() {
+            this.sortedLocations = [];
+
+            for (var eachLocation in this.props.locations) {
+
+                if (this.props.locations.hasOwnProperty(eachLocation)) {
+                    this.sortedLocations.push([eachLocation, this.props.locations[eachLocation]]);
+                }
+            }
+
+            this.sortedLocations.sort(function (a, b) {
+                return b[1] - a[1];
+            });
+
+            this.allSortedLocations = this.sortedLocations.slice();
+
+            this.winningArray = this.sortedLocations.splice(0, 1);
+        }
+    }, {
+        key: 'componentWillUpdate',
+        value: function componentWillUpdate(nextProps) {
+
+            this.sortLocationVisits();
+
+            if (nextProps.locations !== this.props.locations) {
+
+                this.setState({
+                    locations: this.locationsList,
+                    active: true
+                });
+            }
+        }
+    }, {
+        key: 'render',
         value: function render() {
 
-            var locationsList = this.props.locations.map(function (thisLocation) {
-                return react.createElement(
-                    "li",
-                    { key: "thisLocation" },
-                    thisLocation
-                );
-            });
             return react.createElement(
-                "div",
-                { className: "SideBar" },
-                react.createElement(
-                    "ul",
-                    null,
-                    locationsList
-                )
+                'div',
+                { className: this.state.active ? 'SideBar animated bounceInRight' : 'SideBar' },
+                react.createElement(Stats, { locations: this.allSortedLocations }),
+                react.createElement(VisitTable, { winner: this.winningArray, locations: this.sortedLocations })
             );
         }
     }]);
@@ -45376,12 +45542,14 @@ var MapHolder = function (_React$Component) {
         value: function componentDidMount() {
             var _this2 = this;
 
-            var allLocations = [];
+            var allLocations = {};
 
             // Add new map
-            var map = new openlayersmap(function (updatedLocations) {
+            var map = new openlayersmap(function (updatedLocation) {
 
-                allLocations.push(updatedLocations);
+                allLocations[updatedLocation] = allLocations[updatedLocation] || 0;
+
+                allLocations[updatedLocation] += 1;
 
                 _this2.setState({
                     locations: allLocations
@@ -45394,7 +45562,7 @@ var MapHolder = function (_React$Component) {
         value: function render() {
             return react.createElement(
                 'div',
-                { id: 'map' },
+                { id: 'map', className: 'MapHolder' },
                 react.createElement(SideBar, { locations: this.state.locations })
             );
         }

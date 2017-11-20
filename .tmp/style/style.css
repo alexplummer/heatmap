@@ -1,21 +1,21 @@
 @charset "UTF-8";
 h1, .h1 {
-  font-family: "Sanchez", sans-serif; }
+  font-family: "Oswald", sans-serif; }
 
 h2, .h2 {
-  font-family: "Sanchez", sans-serif; }
+  font-family: "Oswald", sans-serif; }
 
 h3, .h3 {
-  font-family: "Sanchez", sans-serif; }
+  font-family: "Oswald", sans-serif; }
 
 h4, .h4 {
-  font-family: "Sanchez", sans-serif; }
+  font-family: "Oswald", sans-serif; }
 
 h5, .h5 {
-  font-family: "Sanchez", sans-serif; }
+  font-family: "Oswald", sans-serif; }
 
 h6, .h6 {
-  font-family: "Sanchez", sans-serif; }
+  font-family: "Oswald", sans-serif; }
 
 p {
   font-family: "Quicksand", sans-serif; }
@@ -210,7 +210,7 @@ form {
   color: #272729; }
 
 blockquote {
-  font-family: "Sanchez", cursive; }
+  font-family: "Oswald", cursive; }
 
 h1, .h1 {
   font-size: 3rem; }
@@ -222,7 +222,7 @@ h3, .h3 {
   font-size: 1.5rem; }
 
 h4, .h4 {
-  font-size: 1.5rem; }
+  font-size: 1.125rem; }
 
 h5, .h5 {
   font-size: 1.125rem; }
@@ -858,21 +858,21 @@ Copyright 2013 Yahoo!
 Licensed under the BSD License.
 https://github.com/yahoo/pure/blob/master/LICENSE.md
 */
-.pure-table {
+.pure-table, .VisitTable table {
   /* Remove spacing between table cells (from Normalize.css) */
   border-collapse: collapse;
   border-spacing: 0;
   empty-cells: show;
   border: 1px solid #cbcbcb; }
 
-.pure-table caption {
+.pure-table caption, .VisitTable table caption {
   color: #000;
   font: italic 85%/1 arial, sans-serif;
   padding: 1em 0;
   text-align: center; }
 
-.pure-table td,
-.pure-table th {
+.pure-table td, .VisitTable table td,
+.pure-table th, .VisitTable table th {
   border-left: 1px solid #cbcbcb;
   /*  inner column border */
   border-width: 0 0 0 1px;
@@ -885,11 +885,11 @@ https://github.com/yahoo/pure/blob/master/LICENSE.md
 
 /* Consider removing this next declaration block, as it causes problems when
 there's a rowspan on the first cell. Case added to the tests. issue#432 */
-.pure-table td:first-child,
-.pure-table th:first-child {
+.pure-table td:first-child, .VisitTable table td:first-child,
+.pure-table th:first-child, .VisitTable table th:first-child {
   border-left-width: 0; }
 
-.pure-table thead {
+.pure-table thead, .VisitTable table thead {
   background-color: #e0e0e0;
   color: #000;
   text-align: left;
@@ -900,7 +900,7 @@ striping:
  even - #fff (white)
  odd  - #f2f2f2 (light gray)
 */
-.pure-table td {
+.pure-table td, .VisitTable table td {
   background-color: transparent; }
 
 .pure-table-odd td {
@@ -918,12 +918,12 @@ striping:
   border-bottom-width: 0; }
 
 /* HORIZONTAL BORDERED TABLES */
-.pure-table-horizontal td,
-.pure-table-horizontal th {
+.pure-table-horizontal td, .VisitTable table td,
+.pure-table-horizontal th, .VisitTable table th {
   border-width: 0 0 1px 0;
   border-bottom: 1px solid #cbcbcb; }
 
-.pure-table-horizontal tbody > tr:last-child > td {
+.pure-table-horizontal tbody > tr:last-child > td, .VisitTable table tbody > tr:last-child > td {
   border-bottom-width: 0; }
 
 /*!
@@ -1720,7 +1720,7 @@ section, body > header, .header-main header, body > footer {
   section, body > header, .header-main header, body > footer {
     width: 1376px; } }
 
-.icon:before, [class^="icon"]:before {
+.icon:before, .VisitTable table:first-of-type tr:nth-child(2) td:first-child:before, [class^="icon"]:before {
   display: inline-block;
   width: 1em;
   margin-right: .2em;
@@ -1797,10 +1797,38 @@ body {
   -webkit-animation-name: swing;
   animation-name: swing; }
 
+@-webkit-keyframes bounceInRight {
+  0% {
+    opacity: 0;
+    -webkit-transform: translateX(2000px); }
+  60% {
+    opacity: 1;
+    -webkit-transform: translateX(-30px); }
+  80% {
+    -webkit-transform: translateX(10px); }
+  100% {
+    -webkit-transform: translateX(0); } }
+
+@keyframes bounceInRight {
+  0% {
+    opacity: 0;
+    transform: translateX(2000px); }
+  60% {
+    opacity: 1;
+    transform: translateX(-30px); }
+  80% {
+    transform: translateX(10px); }
+  100% {
+    transform: translateX(0); } }
+
+.bounceInRight {
+  -webkit-animation-name: bounceInRight;
+  animation-name: bounceInRight; }
+
 @font-face {
   font-family: 'fontello';
-  src: url("../font/fontello.eot?45472167");
-  src: url("../font/fontello.eot?45472167#iefix") format("embedded-opentype"), url("../font/fontello.woff2?45472167") format("woff2"), url("../font/fontello.woff?45472167") format("woff"), url("../font/fontello.ttf?45472167") format("truetype"), url("../font/fontello.svg?45472167#fontello") format("svg");
+  src: url("../font/fontello.eot?4316559");
+  src: url("../font/fontello.eot?4316559#iefix") format("embedded-opentype"), url("../font/fontello.woff2?4316559") format("woff2"), url("../font/fontello.woff?4316559") format("woff"), url("../font/fontello.ttf?4316559") format("truetype"), url("../font/fontello.svg?4316559#fontello") format("svg");
   font-weight: normal;
   font-style: normal; }
 
@@ -1810,7 +1838,7 @@ body {
 @media screen and (-webkit-min-device-pixel-ratio:0) {
   @font-face {
     font-family: 'fontello';
-    src: url('../font/fontello.svg?45472167#fontello') format('svg');
+    src: url('../font/fontello.svg?4316559#fontello') format('svg');
   }
 }
 */
@@ -1841,50 +1869,10 @@ body {
   /* Uncomment for 3D effect */
   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */ }
 
-.icon-cancel-circled2:before {
+.icon-star-filled:before, .VisitTable table:first-of-type tr:nth-child(2) td:first-child:before {
   content: '\e800'; }
 
 /* '' */
-.icon-calendar:before {
-  content: '\e801'; }
-
-/* '' */
-.icon-star:before {
-  content: '\e802'; }
-
-/* '' */
-.icon-search:before {
-  content: '\e803'; }
-
-/* '' */
-.icon-th:before {
-  content: '\e804'; }
-
-/* '' */
-.icon-users:before {
-  content: '\f064'; }
-
-/* '' */
-.icon-link:before {
-  content: '\f07b'; }
-
-/* '' */
-.icon-list-bullet:before {
-  content: '\f0ca'; }
-
-/* '' */
-.icon-folder-open-empty:before {
-  content: '\f115'; }
-
-/* '' */
-.icon-code:before {
-  content: '\f121'; }
-
-/* '' */
-.icon-map-o:before {
-  content: '\f278'; }
-
-/* '' */
 body, html {
   background: #fff;
   overflow-x: hidden; }
@@ -1895,14 +1883,65 @@ body, html {
   backface-visibility: hidden; }
 
 /* inject:componentImports */
+.MainHeader {
+  position: absolute;
+  z-index: 50;
+  background: rgba(6, 34, 119, 0.8);
+  border-bottom-right-radius: 20px; }
+  .MainHeader h1 {
+    padding: 0;
+    margin: 1.6875rem;
+    font-weight: 300;
+    color: #fff; }
+
+.MapHolder {
+  height: 100vh; }
+  .MapHolder .ol-overlaycontainer-stopevent {
+    display: none; }
+
 .SideBar {
   position: fixed;
   top: 0;
   right: 0;
-  width: 36vw;
+  width: 30vw;
   height: 100vh;
-  background: #fff;
-  z-index: 50; }
+  padding: 1.6875rem;
+  background: #062277;
+  z-index: 50;
+  transform: translateX(100%); }
+
+.Stats text {
+  fill: #fff; }
+
+.VisitTable table {
+  width: 100%; }
+  .VisitTable table:first-of-type tr:first-of-type {
+    background: rgba(250, 250, 250, 0.2); }
+  .VisitTable table:first-of-type tr:nth-child(2) td:first-child {
+    position: relative; }
+    .VisitTable table:first-of-type tr:nth-child(2) td:first-child:before {
+      position: absolute;
+      left: -25px;
+      top: 4px;
+      font-size: 2.25rem;
+      color: #ffe600; }
+  .VisitTable table th, .VisitTable table td {
+    text-align: center; }
+  .VisitTable table th:first-of-type, .VisitTable table td:first-of-type {
+    text-align: left;
+    width: 65%; }
+  .VisitTable table:nth-child(2) th, .VisitTable table:nth-child(2) td {
+    font-size: 1.125rem; }
+
+.VisitTable h3, .VisitTable h4, .VisitTable th, .VisitTable td {
+  color: #fff; }
+
+.VisitTable h3, .VisitTable h4 {
+  font-weight: 300;
+  margin-bottom: -0.84375rem; }
+
+.VisitTable h4 {
+  text-transform: uppercase; }
 
 /* endinjectComponent */
 

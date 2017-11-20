@@ -1,0 +1,53 @@
+
+// VisitTable
+// ============
+// A table to track number of visitors
+
+.VisitTable {
+
+    table {
+        @extend .pure-table;
+        @extend .pure-table-horizontal;
+        width: 100%;
+
+        &:first-of-type tr:first-of-type{
+            background: rgba(250,250,250, .2);
+        }
+        &:first-of-type tr:nth-child(2) td:first-child {
+            @extend .icon;
+            @extend .icon-star-filled;
+            position: relative;
+
+            &:before {
+                position: absolute;
+                left: -25px;
+                top: 4px;
+                font-size: $font-xl;
+                color: #ffe600;
+            }
+        }
+        th, td {
+            text-align: center;
+        }
+        th:first-of-type, td:first-of-type {
+            text-align: left;
+            width: 65%;
+        }
+        &:nth-child(2) {
+
+            th, td {
+                font-size: $font-m;
+            }
+        }
+    }
+    h3, h4, th, td {
+        color: #fff;
+    }
+    h3, h4 {
+        font-weight: 300;
+        margin-bottom: -$size-s;
+    }
+    h4 {
+        text-transform: uppercase;
+    }
+}

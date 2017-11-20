@@ -7,8 +7,10 @@
     position: fixed;
     top: 0;
     right: 0;
-    width: 36vw;
+    width: 30vw;
     height: 100vh;
-    background: #fff;
+    padding: $size-m;
+    background: $clr-primary;
     z-index: $z-m;
+    transform: translateX(100%);
 }

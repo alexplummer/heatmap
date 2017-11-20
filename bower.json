@@ -16,7 +16,8 @@
     "bower_components"
   ],
   "devDependencies": {
-    "animate-sass": "^0.6.6"
+    "animate-sass": "^0.6.6",
+    "c3": "^0.4.18"
   },
   "overrides": {
     "ally.js": {

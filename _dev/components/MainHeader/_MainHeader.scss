@@ -1,0 +1,18 @@
+
+// MainHeader
+// ============
+// Heading for the document
+
+.MainHeader {
+    position: absolute;
+    z-index: $z-m;
+    background: fade-out($clr-primary, .2);
+    border-bottom-right-radius: 20px;
+
+    h1 {
+        padding: 0;
+        margin: $size-m;
+        font-weight: 300;
+        color: #fff;
+    }
+}

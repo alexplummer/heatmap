@@ -19,13 +19,15 @@ class MapHolder extends React.Component {
     }
 
     componentDidMount() {
-        let allLocations = [];
-        
-        // Add new map
-        let map = new openlayersmap((updatedLocations) => {
-            
-            allLocations.push(updatedLocations);
+        let allLocations = {};
 
+        // Add new map
+        let map = new openlayersmap((updatedLocation) => {
+
+            allLocations[updatedLocation] = allLocations[updatedLocation] || 0;
+
+            allLocations[updatedLocation] += 1;
+            
             this.setState({ 
                 locations: allLocations 
             });
@@ -35,7 +37,7 @@ class MapHolder extends React.Component {
 
     render() {
         return (
-            <div id="map">
+            <div id="map" className="MapHolder">
                 <SideBar locations={this.state.locations} />
             </div>
         );

@@ -4,5 +4,9 @@
 // Holds the main map component
 
 .MapHolder {
-
+    height: 100vh;
+    
+    .ol-overlaycontainer-stopevent {
+        display: none;
+    }
 }

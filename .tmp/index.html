@@ -37,6 +37,7 @@
     <meta name="msapplication-TileColor" content="#{brand}">
     <!-- build:css style/style.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="../bower_components/c3/c3.css" />
     <!-- endbower -->
     <link rel="stylesheet" href="style/style.css">
     <!-- endbuild -->
@@ -49,9 +50,14 @@
     <meta name="msapplication-config" content="img/brand/favicons/browserconfig.xml?v=6">
 </head>
 <body class="home">
+    <div class="MainHeader">
+        <h1>Leatherhead Social Heatmap</h1>
+    </div>
     <main role="main" id="app"></main>
     <!-- build:js script/script.js -->
     <!-- bower:js -->
+    <script src="../bower_components/d3/d3.js"></script>
+    <script src="../bower_components/c3/c3.js"></script>
     <!-- endbower -->
     <!-- inject:imports -->
     <script src="script/app.js"></script>
@@ -59,7 +65,7 @@
     <!-- endbuild -->
     <!-- Google fonts -->
     <script>
-        WebFontConfig={google:{families:["Quicksand:400,500","Sanchez"]}},function(e){var n=e.createElement("script"),o=e.scripts[0];n.src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js",n.async=!0,o.parentNode.insertBefore(n,o)}(document);
+        WebFontConfig={google:{families:["Quicksand:400,500","Oswald:300,400"]}},function(e){var n=e.createElement("script"),o=e.scripts[0];n.src="https://ajax.googleapis.com/ajax/libs/webfont/1.6.26/webfont.js",n.async=!0,o.parentNode.insertBefore(n,o)}(document);
     </script>
 </body>
 

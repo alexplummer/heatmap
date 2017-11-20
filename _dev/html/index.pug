@@ -11,10 +11,12 @@ block pageVars
 	- var bodyClass = 'home'
 
 //- Includes
-//- include ../components/testcomponent/_testcomponent
+include ../components/MainHeader/_MainHeader
 
 //- Page content
 block content
+
+	+MainHeader
 
 	main(role="main")#app
 

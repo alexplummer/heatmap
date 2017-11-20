@@ -119,7 +119,9 @@ class ${this.properName} extends React.Component {
 
     render() {
         return (
-            <p className="test">Hi there</p>
+            <div className="${this.properName}">
+                <p className="test">${this.properName} loaded!</p>
+            </div>
         );
     }
 }

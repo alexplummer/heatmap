@@ -63,7 +63,7 @@ gulp.task('inject-JSdeps', () => {
 const babelConfig = {
 	exclude: 'node_modules/**',
 	"presets": [['es2015', { modules: false }], 'react'],
-	"plugins": ["external-helpers"],
+	"plugins": ["external-helpers", "transform-remove-strict-mode"],
 	babelrc: false
 };
 
@@ -87,7 +87,6 @@ const rollupJS = (inputFile, options) => {
 				title: 'Rollup error',
 				message: e.stack
 			});
-			stream.emit('end');
 		})
 		.pipe(plugins.plumber())
 		.pipe(plugins.vinylSourceStream(inputFile, options.basePath))
