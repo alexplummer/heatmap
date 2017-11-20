@@ -4,9 +4,9 @@
 // Define paths used within this gulp file
 
 var paths = {
-	tmp:       '.tmp',
-	dev:       '_dev',
-	prod:      '_prod'
+	tmp: '.tmp',
+	dev: '_dev',
+	prod: '_prod'
 };
 
 
@@ -14,17 +14,19 @@ var paths = {
 // ============
 // Load plugins in packages.json automatically
 
-var gulp     = require('gulp'),
-	fs       = require('fs'),
-	wiredep  = require('wiredep').stream,
-	argv     = require('yargs').argv,
+var gulp = require('gulp'),
+	fs = require('fs'),
+	wiredep = require('wiredep').stream,
+	argv = require('yargs').argv,
 	gulpsync = require('gulp-sync')(gulp),
-	spawn    = require('child_process').spawn,
-	plugins  = require('gulp-load-plugins')({
-				pattern: ['*'],
-				replaceString: /\bgulp[\-.]/,
-				lazy: true,
-				camelize: true});
+	spawn = require('child_process').spawn,
+	plugins = require('gulp-load-plugins')({
+		pattern: ['*'],
+		replaceString: /\bgulp[\-.]/,
+		lazy: true,
+		camelize: true,
+		scope: ['devDependencies']
+	});
 
 
 // Favicons
@@ -36,8 +38,8 @@ var FAVICON_DATA_FILE = './lib/faviconData.json';
 gulp.task('generate-favicon', done => {
 
 	plugins.realFavicon.generateFavicon({
-		masterPicture: paths.dev+'/img/brand/logo-mark.png',
-		dest: paths.dev+'/img/brand/favicons',
+		masterPicture: paths.dev + '/img/brand/logo-mark.png',
+		dest: paths.dev + '/img/brand/favicons',
 		iconsPath: 'img/brand/favicons',
 		design: {
 			ios: {
@@ -109,9 +111,9 @@ gulp.task('generate-favicon', done => {
 // Injects the favicon links into head of HTML
 
 gulp.task('inject-favicon-markups', () => {
-	gulp.src(paths.dev+'/html/includes/_head.pug')
+	gulp.src(paths.dev + '/html/includes/_head.pug')
 		.pipe(plugins.realFavicon.injectFaviconMarkups(JSON.parse(fs.readFileSync(FAVICON_DATA_FILE)).favicon.html_code))
-		.pipe(gulp.dest(paths.dev+'/html/includes/'));
+		.pipe(gulp.dest(paths.dev + '/html/includes/'));
 });
 
 
@@ -120,12 +122,12 @@ gulp.task('inject-favicon-markups', () => {
 // Tidies up the duplicate tags from inject task
 
 gulp.task('replace-html', () => {
-  gulp.src(paths.dev+'/html/includes/_head.pug')
-    .pipe(plugins.replace('</body></html>', ''))
-    .pipe(plugins.replace('<link rel="shortcut icon" href="img/brand/favicons/favicon.ico?v=6">', ''))
-    .pipe(plugins.replace('<meta name="apple-mobile-web-app-title" content="app_name">', ''))
-    .pipe(plugins.replace('<meta name="application-name" content="app_name">', ''))
-    .pipe(gulp.dest(paths.dev+'/html/includes/'));
+	gulp.src(paths.dev + '/html/includes/_head.pug')
+		.pipe(plugins.replace('</body></html>', ''))
+		.pipe(plugins.replace('<link rel="shortcut icon" href="img/brand/favicons/favicon.ico?v=6">', ''))
+		.pipe(plugins.replace('<meta name="apple-mobile-web-app-title" content="app_name">', ''))
+		.pipe(plugins.replace('<meta name="application-name" content="app_name">', ''))
+		.pipe(gulp.dest(paths.dev + '/html/includes/'));
 });
 
 
@@ -134,6 +136,6 @@ gulp.task('replace-html', () => {
 // For the sakes of IE...
 
 gulp.task('copy:fav', () => {
-	gulp.src(paths.dev+'/img/brand/favicons/favicon.ico')
-	.pipe(plugins.copy(paths.dev,{prefix:4}));
+	gulp.src(paths.dev + '/img/brand/favicons/favicon.ico')
+		.pipe(plugins.copy(paths.dev, { prefix: 4 }));
 });

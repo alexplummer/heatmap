@@ -46,46 +46,46 @@ class Stats extends React.Component {
                 }
             });
 
-        let timeout = 100;
+            let timeout = 100;
 
-        function addColumn(data, delay) {
-            let dataTmp = [data[0], 0];
+            function addColumn(data, delay) {
+                let dataTmp = [data[0], 0];
 
-            setTimeout(function () {
-                chart.internal.d3.transition().duration(100);
-                chart.load({
-                    columns: [
-                        dataTmp
-                    ]
-                });
-            }, timeout);
-
-            timeout += 100;
-
-            data.forEach(function (value, index) {
                 setTimeout(function () {
-                    dataTmp[index] = value;
-                    if (index < 10) dataTmp.push(0);
+                    chart.internal.d3.transition().duration(100);
                     chart.load({
                         columns: [
                             dataTmp
-                        ],
-                        length: 0
+                        ]
                     });
-                }, (timeout + (delay / data.length * index)));
-            });
-            timeout += delay;
+                }, timeout);
+
+                timeout += 100;
+
+                data.forEach(function (value, index) {
+                    setTimeout(function () {
+                        dataTmp[index] = value;
+                        if (index < 10) dataTmp.push(0);
+                        chart.load({
+                            columns: [
+                                dataTmp
+                            ],
+                            length: 0
+                        });
+                    }, (timeout + (delay / data.length * index)));
+                });
+                timeout += delay;
+            }
+
+            this.props.locations.forEach((thisLocation) => {
+                addColumn([thisLocation[0], thisLocation[1]], 1000)
+            })
         }
 
-        this.props.locations.forEach((thisLocation) => {
-            addColumn([thisLocation[0], thisLocation[1]], 1000)
-        })
-    }
-
-    return(
-            <div className= { this.state.active ? "Stats animated bounceInDown" : "Stats" } />
+        return (
+            <div className={this.state.active ? "Stats animated bounceInDown" : "Stats"} />
         );
-}
+    }
 }
 
 // Exports

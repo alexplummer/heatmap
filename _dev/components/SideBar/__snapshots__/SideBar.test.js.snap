@@ -1,0 +1,32 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SideBar renders correctly renders correctly 1`] = `
+<div
+  className="SideBar"
+>
+  <div
+    className="Stats"
+  />
+  <div
+    className="VisitTable"
+  >
+    <h3>
+      Current winner
+    </h3>
+    <table
+      className=""
+    >
+      <tr>
+        <th>
+          Name
+        </th>
+        <th>
+          Visits
+        </th>
+      </tr>
+    </table>
+    
+    <table />
+  </div>
+</div>
+`;

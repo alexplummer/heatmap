@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`VisitTable renders correctly renders correctly 1`] = `
+<div
+  className="VisitTable"
+>
+  <h3>
+    Current winner
+  </h3>
+  <table
+    className=""
+  >
+    <tr>
+      <th>
+        Name
+      </th>
+      <th>
+        Visits
+      </th>
+    </tr>
+    <tr>
+      <td>
+        l
+      </td>
+      <td>
+        o
+      </td>
+    </tr>
+    <tr>
+      <td />
+      <td />
+    </tr>
+  </table>
+  
+  <table />
+</div>
+`;

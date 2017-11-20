@@ -24,7 +24,8 @@ let gulp = require('gulp'),
         pattern: ['*'],
         replaceString: /\bgulp[\-.]/,
         lazy: true,
-        camelize: true
+        camelize: true,
+		scope: ['devDependencies']
     });
 
 

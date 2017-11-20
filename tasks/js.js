@@ -25,7 +25,8 @@ var gulp = require('gulp'),
 		pattern: ['*'],
 		replaceString: /\bgulp[\-.]/,
 		lazy: true,
-		camelize: true
+		camelize: true,
+		scope: ['devDependencies']
 	});
 
 
@@ -75,26 +76,26 @@ const rollupJS = (inputFile, options) => {
 			sourcemap: options.sourcemap,
 			plugins: [
 				plugins.rollupPluginBabel(babelConfig),
-				plugins.rollupPluginReplace({'process.env.NODE_ENV': JSON.stringify( 'production' )}),
-				plugins.rollupPluginCommonjs({}),			
+				plugins.rollupPluginReplace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
+				plugins.rollupPluginCommonjs({}),
 				plugins.rollupPluginNodeResolve({ jsnext: true, main: true })
 			]
 		})
-		.on('error', e => {
-			console.error(e.stack);
+			.on('error', e => {
+				console.error(e.stack);
 
-			notifier.notify({
-				title: 'Rollup error',
-				message: e.stack
-			});
-		})
-		.pipe(plugins.plumber())
-		.pipe(plugins.vinylSourceStream(inputFile, options.basePath))
-		.pipe(plugins.vinylBuffer())
-		.pipe(plugins.sourcemaps.init({ loadMaps: true }))
-		.pipe(plugins.sourcemaps.write('.'))
-		.pipe(gulp.dest(paths.tmp + '/script/'))
-		.pipe(plugins.browserSync.stream());
+				notifier.notify({
+					title: 'Rollup error',
+					message: e.stack
+				});
+			})
+			.pipe(plugins.plumber())
+			.pipe(plugins.vinylSourceStream(inputFile, options.basePath))
+			.pipe(plugins.vinylBuffer())
+			.pipe(plugins.sourcemaps.init({ loadMaps: true }))
+			.pipe(plugins.sourcemaps.write('.'))
+			.pipe(gulp.dest(paths.tmp + '/script/'))
+			.pipe(plugins.browserSync.stream());
 	};
 }
 
@@ -103,6 +104,7 @@ gulp.task('js', rollupJS('app.js', {
 	sourcemap: true,
 	format: 'iife'
 }));
+
 
 // Copy scripts
 // ============
