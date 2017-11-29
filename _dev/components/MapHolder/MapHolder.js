@@ -5,6 +5,8 @@
 
 // Imports
 import React from 'react';
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
 import openlayersmap from '../../script/base/openlayers';
 import SideBar from '../SideBar/SideBar';
 

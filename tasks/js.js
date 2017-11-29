@@ -77,7 +77,11 @@ const rollupJS = (inputFile, options) => {
 			plugins: [
 				plugins.rollupPluginBabel(babelConfig),
 				plugins.rollupPluginReplace({ 'process.env.NODE_ENV': JSON.stringify('production') }),
-				plugins.rollupPluginCommonjs({}),
+				plugins.rollupPluginCommonjs({
+					namedExports: {
+						'node_modules/react/index.js': ['Children', 'Component', 'PropTypes', 'createElement'],
+					}
+				}),
 				plugins.rollupPluginNodeResolve({ jsnext: true, main: true })
 			]
 		})
